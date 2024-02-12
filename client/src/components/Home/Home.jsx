@@ -87,14 +87,14 @@ export const Home = ({ search, setSearch }) => {
               />
             </div>
           </div>
-          {foodCat !== [] ? (
+          {foodCat != [] ? (
             foodCat.map((data) => {
               return (
                 <div className=" mb-3" key={data._id} id="food-items">
                   <h2 className="my-2"> {data.CategoryName}</h2>
                   <hr />
                   <div className="row">
-                    {foodItem !== [] ? (
+                    {foodItem != [] ? (
                       foodItem
                         .filter(
                           (item) =>

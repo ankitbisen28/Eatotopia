@@ -23,7 +23,7 @@ export const Card = ({ foodItem, itemOption }) => {
       }
     }
 
-    if (food !== []) {
+    if (food != []) {
       if (food.size === size) {
         await dispatch({
           type: "UPDATE",
