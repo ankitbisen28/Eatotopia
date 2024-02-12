@@ -1,0 +1,19 @@
+{
+  "name": "Eatotopia",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "repository": "git@github.com:ankitbisen28/Food-order-app.git",
+  "author": "Ankit Bisen <ankitbisen288@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "client",
+    "backend"
+  ],
+  "scripts": {
+    "start": "concurrently \"yarn workspace backend start\" \"yarn workspace client start\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
