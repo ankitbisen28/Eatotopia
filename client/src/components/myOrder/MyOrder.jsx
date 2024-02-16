@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 export const MyOrder = () => {
   const [orderData, setorderData] = useState({});
   console.log(orderData);
 
   const fetchMyOrder = async () => {
-    console.log(localStorage.getItem("userEmail"));
+    // console.log(localStorage.getItem("userEmail"));
     await fetch("http://localhost:5000/api/myOrderData", {
       method: "POST",
       headers: {
@@ -14,10 +15,14 @@ export const MyOrder = () => {
       body: JSON.stringify({
         email: localStorage.getItem("userEmail"),
       }),
-    }).then(async (res) => {
-      let response = await res.json();
-      setorderData(response);
-    });
+    })
+      .then(async (res) => {
+        let response = await res.json();
+        setorderData(response);
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
   };
 
   useEffect(() => {

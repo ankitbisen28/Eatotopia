@@ -7,22 +7,23 @@ import {
   faLeaf,
   faHandsBubbles,
 } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export const Home = ({ search, setSearch }) => {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
+  // console.log(foodCat);
 
   let loadData = async () => {
-    let response = await fetch("http://localhost:5000/api/foodData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    response = await response.json();
-    setFoodItem(response[0]);
-    setFoodCat(response[1]);
+    try {
+      let response = await axios.post("http://localhost:5000/api/foodData");
+      console.log(response.data[0]);
+      setFoodItem(response.data[0]);
+      setFoodCat(response.data[1]);
+    } catch (error) {
+      toast.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
@@ -94,6 +95,7 @@ export const Home = ({ search, setSearch }) => {
                   <h2 className="my-2"> {data.CategoryName}</h2>
                   <hr />
                   <div className="row">
+                    {console.log(foodItem)}
                     {foodItem != [] ? (
                       foodItem
                         .filter(

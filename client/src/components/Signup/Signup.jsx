@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import '../Signup/Signup.css'
+import "../Signup/Signup.css";
+import { toast } from "react-toastify";
 
 export const Signup = () => {
   const [signupData, setSignupData] = useState({
@@ -26,22 +27,23 @@ export const Signup = () => {
         location: signupData.geolocation,
       }),
     });
+    try {
+      const json = await response.json();
 
-    const json = await response.json();
-
-    if (!json.success) {
-      alert("Enter Valid Credentials");
-    } else {
-      navigate("/");
+      if (!json.success) {
+        alert("Enter Valid Credentials");
+      } else {
+        navigate("/");
+      }
+      console.log(json);
+    } catch (error) {
+      toast.error(error);
     }
-    console.log(json);
   };
 
   const onChange = (event) => {
     setSignupData({ ...signupData, [event.target.name]: event.target.value });
   };
-   
- 
 
   return (
     <>

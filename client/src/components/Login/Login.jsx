@@ -24,21 +24,27 @@ export const Login = () => {
       }),
     });
 
-    const json = await response.json();
-    // console.log("this is json after login", json);
-
-    if (!json.success) {
-      toast.error("Enter Valid Credentials");
+    try {
+      const json = await response.json();
+      // console.log("this is json after login", json);
+  
+      if (!json.success) {
+        toast.error("Enter Valid Credentials");
+      }
+  
+      if (json.success) {
+        localStorage.setItem("authToken", json.authtoken);
+        localStorage.setItem("userEmail", json.email);
+        // console.log(localStorage.getItem("authToken"))
+        toast.success("Logged in")
+        navigate("/");
+      }
+      // console.log(json);
+      
+    } catch (error) {
+      toast.error(error)
     }
 
-    if (json.success) {
-      localStorage.setItem("authToken", json.authtoken);
-      localStorage.setItem("userEmail", json.email);
-      // console.log(localStorage.getItem("authToken"))
-      toast.success("Logged in")
-      navigate("/");
-    }
-    // console.log(json);
   };
 
   const onChange = (event) => {
