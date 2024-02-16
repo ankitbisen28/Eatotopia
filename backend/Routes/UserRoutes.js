@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../Models/User.js");
 const { body, validationResult } = require("express-validator");
-const bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
+const bcrypt = require("bcryptjs");
+var jwt = require("jsonwebtoken");
 
 const JWT_SECRET = "helloworld";
 
@@ -31,9 +31,9 @@ router.post(
 
       const data = {
         user: {
-          id: user.id
-        }
-      }
+          id: user.id,
+        },
+      };
       const authtoken = jwt.sign(data, JWT_SECRET);
 
       res.json({ success: true, authtoken });
@@ -64,7 +64,10 @@ router.post(
           .json({ errors: "Try loggin with correct credentials" });
       }
 
-      const passwordCompare = await bcrypt.compare(req.body.password, user.password);
+      const passwordCompare = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
 
       if (!passwordCompare) {
         return res
@@ -74,9 +77,9 @@ router.post(
 
       const data = {
         user: {
-          id: user.id
-        }
-      }
+          id: user.id,
+        },
+      };
       const authtoken = jwt.sign(data, JWT_SECRET);
 
       res.json({ success: true, authtoken, email });
@@ -86,5 +89,35 @@ router.post(
     }
   }
 );
+
+router.post("/verifyForgetPassword", async (req, res) => {
+  try {
+    const reqBody = await req.body;
+    const { token, newPassword } = reqBody;
+    // console.log(token);
+
+    const user = await User.findOne({
+      forgotPasswordToken: token,
+      forgotPasswordTokenExpiry: { $gt: Date.now() },
+    });
+
+    // console.log(user);
+    if (!user) {
+      return res.json({ error: "Invalid token" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.password = hashedPassword;
+    user.forgotPasswordToken = undefined;
+    user.forgotPasswordTokenExpiry = undefined;
+    await user.save();
+
+    return res.json({ message: "Email verified successfully" });
+  } catch (error) {
+    return res.json({ error: error.message });
+  }
+});
 
 module.exports = router;

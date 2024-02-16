@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
-import '../Login/Login.css'
+import { ToastContainer, toast } from "react-toastify";
+import "../Login/Login.css";
 
-
-export const Login = ({ loggedIn }) => {
-  
-
+export const Login = () => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -31,14 +28,14 @@ export const Login = ({ loggedIn }) => {
     // console.log("this is json after login", json);
 
     if (!json.success) {
-      alert("Enter Valid Credentials");
+      toast.error("Enter Valid Credentials");
     }
 
     if (json.success) {
       localStorage.setItem("authToken", json.authtoken);
-      localStorage.setItem("userEmail", json.email)
+      localStorage.setItem("userEmail", json.email);
       // console.log(localStorage.getItem("authToken"))
-      loggedIn();
+      toast.success("Logged in")
       navigate("/");
     }
     // console.log(json);
@@ -50,7 +47,7 @@ export const Login = ({ loggedIn }) => {
 
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <div className="container" id="loginComponent">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -80,9 +77,14 @@ export const Login = ({ loggedIn }) => {
           <button type="submit" className="btn btn-success">
             Login
           </button>
-          <Link to="/signup" className="btn btn-danger mx-3">
-            Create a account
-          </Link>
+          <div className="d-flex flex-row mb-3">
+            <Link to="/forgetPasswordEmail" className="p-2">
+              Forget Password
+            </Link>
+            <Link to="/signup" className="p-2">
+              Create a account
+            </Link>
+          </div>
         </form>
       </div>
     </>

@@ -7,9 +7,11 @@ import { Footer } from "./components/Footer/Footer";
 import { Signup } from "./components/Signup/Signup";
 import { CardProvider } from "./ContextReducer/ContextReducer";
 import { MyOrder } from "./components/myOrder/MyOrder";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { About } from "./components/About/About";
+import { ForgetPasswordEmail } from "./pages/ForgetPasswordEmail";
+import { VerifyForgetPassword } from "./pages/VerifyForgetPassword";
 
 function App() {
   const loggedIn = () => toast("You Logged in");
@@ -21,15 +23,33 @@ function App() {
     <>
       <CardProvider>
         <Router>
-          <Nevbar loggedOut={loggedOut}/>
+          <Nevbar loggedOut={loggedOut} />
           <ToastContainer />
           <div>
             <Routes>
-              <Route exact path="/" element={<Home search={search} setSearch={setSearch}/>} />
-              <Route exact path="/login" element={<Login loggedIn={loggedIn} />} />
+              <Route
+                exact
+                path="/"
+                element={<Home search={search} setSearch={setSearch} />}
+              />
+              <Route
+                exact
+                path="/login"
+                element={<Login loggedIn={loggedIn} />}
+              />
               <Route exact path="/signup" element={<Signup />} />
               <Route exact path="/myOrder" element={<MyOrder />} />
               <Route exact path="/about" element={<About />} />
+              <Route
+                exact
+                path="/forgetPasswordEmail"
+                element={<ForgetPasswordEmail />}
+              />
+              <Route
+                exact
+                path="/VerifyForgetPassword"
+                element={<VerifyForgetPassword />}
+              />
             </Routes>
           </div>
         </Router>

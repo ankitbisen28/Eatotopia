@@ -2,13 +2,13 @@ const express = require("express");
 const app = express();
 const PORT = 5000 || process.env.PORT;
 const mongoDB = require("./db");
-const CreateUser = require("../backend/Routes/CreateUser.js");
+const UserRoutes = require("../backend/Routes/UserRoutes.js");
 const DisplayData = require("../backend/Routes/DisplayData");
 const OrderData = require("../backend/Routes/OrderData");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-const sendMail = require('./Routes/sendMail.js')
+const sendMail = require("./Routes/sendMail.js");
 
 dotenv.config();
 mongoDB();
@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 app.use(express.json());
-app.use("/api", CreateUser);
+app.use("/api", UserRoutes);
 app.use("/api", DisplayData);
 app.use("/api", OrderData);
 app.use("/api", sendMail);

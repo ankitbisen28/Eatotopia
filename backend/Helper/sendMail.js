@@ -1,14 +1,17 @@
 const nodemailer = require("nodemailer");
 const User = require("../Models/User");
-const { bcryptjs, hash } = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 
 const sendEmail = async (email, emailType, userId) => {
   try {
     // create a hashed token
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const token = await bcryptjs.hash(userId.toString(), 10);
-    console.log(email);
+    // console.log(userId);
+    if (!userId) {
+      throw new Error("userId is undefined or null");
+    }
+    const token = await bcrypt.hash(userId.toString(), 10);
     const hashedToken = token
       .split("")
       .filter((char) => characters.includes(char))
@@ -34,11 +37,11 @@ const sendEmail = async (email, emailType, userId) => {
     const mailOptions = {
       from: process.env.NODE_MAILER_USER,
       to: email,
-      subject: emailType === "Reset your password",
+      subject: emailType === "RESET" ? "Reset your password" : " ",
       html: `<p>Click <a href="${
         process.env.DOMAIN
-      }/${emailType.toLowerCase()}?token=${hashedToken}">here</a> to ${
-        emailType === "reset your password"
+      }/?token=${hashedToken}">here</a> to ${
+        emailType === "RESET" ? "reset your password" : " "
       }</p>`,
     };
 

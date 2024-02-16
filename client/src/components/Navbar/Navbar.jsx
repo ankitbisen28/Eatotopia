@@ -7,6 +7,7 @@ import { useCart } from "../../ContextReducer/ContextReducer";
 import logo from "../../assets/images/fastfood.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNavicon } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 export const Nevbar = ({ loggedOut }) => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export const Nevbar = ({ loggedOut }) => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userEmail");
     navigate("/login");
-    loggedOut();
+    toast.error("Logged out");
   };
   return (
     <div>
