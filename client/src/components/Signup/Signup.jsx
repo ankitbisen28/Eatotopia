@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Signup/Signup.css";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export const Signup = () => {
   const [signupData, setSignupData] = useState({
@@ -15,29 +16,30 @@ export const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/createuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: signupData.name,
-        email: signupData.email,
-        password: signupData.password,
-        location: signupData.geolocation,
-      }),
-    });
     try {
-      const json = await response.json();
+      const response = await axios.post(
+        "http://localhost:5000/api/createuser",
+        {
+          name: signupData.name,
+          email: signupData.email,
+          password: signupData.password,
+          location: signupData.geolocation,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!json.success) {
+      if (!response.data.success) {
         alert("Enter Valid Credentials");
       } else {
         navigate("/");
       }
-      console.log(json);
+      console.log(response.data);
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message);
     }
   };
 

@@ -2,6 +2,7 @@ import React from "react";
 import { useCart, useDispatch } from "../../ContextReducer/ContextReducer";
 import { Trash } from "react-bootstrap-icons";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export const Cart = () => {
   let data = useCart();
@@ -14,51 +15,31 @@ export const Cart = () => {
       </div>
     );
   }
-  // this is new api handler copied github. // https://github.com/arshdeepsingh2267/Gofood/blob/main/src/screens/Cart.js
+
   const handleCheckOut = async () => {
     let userEmail = localStorage.getItem("userEmail");
-    // console.log(data,localStorage.getItem("userEmail"),new Date())
-    let response = await fetch("http://localhost:5000/api/orderData", {
-      // credentials: 'include',
-      // Origin:"http://localhost:3000/login",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        order_data: data,
-        email: userEmail,
-        order_date: new Date().toDateString(),
-      }),
-    });
     try {
-      // console.log("JSON RESPONSE:::::", response.status)
+      const response = await axios.post(
+        "http://localhost:5000/api/orderData",
+        {
+          order_data: data,
+          email: userEmail,
+          order_date: new Date().toDateString(),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       if (response.status === 200) {
         dispatch({ type: "DROP" });
       }
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message);
     }
   };
-  // This is old api handler
-  // const handleCheckOut = async () => {
-  //   let userEmail = localStorage.getItem("userEmail");
-  //   let response = await fetch("http://localhost:5000/api/orderData", {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       order_data: data,
-  //       email: userEmail,
-  //       order_date: new Date().toDateString(),
-  //     }),
-  //   });
-  //   console.log("this is response ", response.status);
-  //   if (response.status === 200) {
-  //     dispatch({ type: "DROP" });
-  //   }
-  // };
 
   let totalPrice = data.reduce((total, food) => total + food.price, 0);
 

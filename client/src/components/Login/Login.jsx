@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 import "../Login/Login.css";
 
 export const Login = () => {
@@ -13,38 +14,38 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/loginuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: loginData.email,
-        password: loginData.password,
-      }),
-    });
-
     try {
-      const json = await response.json();
+      const response = await axios.post(
+        "http://localhost:5000/api/loginuser",
+        {
+          email: loginData.email,
+          password: loginData.password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const json = response.data;
       // console.log("this is json after login", json);
-  
+
       if (!json.success) {
         toast.error("Enter Valid Credentials");
       }
-  
+
       if (json.success) {
         localStorage.setItem("authToken", json.authtoken);
         localStorage.setItem("userEmail", json.email);
         // console.log(localStorage.getItem("authToken"))
-        toast.success("Logged in")
+        toast.success("Logged in");
         navigate("/");
       }
       // console.log(json);
-      
     } catch (error) {
-      toast.error(error)
+      toast.error(error.message);
     }
-
   };
 
   const onChange = (event) => {

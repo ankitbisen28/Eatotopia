@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export const MyOrder = () => {
   const [orderData, setorderData] = useState({});
   console.log(orderData);
 
   const fetchMyOrder = async () => {
-    // console.log(localStorage.getItem("userEmail"));
-    await fetch("http://localhost:5000/api/myOrderData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: localStorage.getItem("userEmail"),
-      }),
-    })
-      .then(async (res) => {
-        let response = await res.json();
-        setorderData(response);
-      })
-      .catch((error) => {
-        toast.error(error);
-      });
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/myOrderData",
+        {
+          email: localStorage.getItem("userEmail"),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setorderData(response.data);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
