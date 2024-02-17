@@ -17,7 +17,9 @@ export const Home = ({ search, setSearch }) => {
 
   let loadData = async () => {
     try {
-      let response = await axios.post("http://localhost:5000/api/foodData");
+      let response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/api/foodData`
+      );
       console.log(response.data[0]);
       setFoodItem(response.data[0]);
       setFoodCat(response.data[1]);

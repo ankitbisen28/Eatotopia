@@ -9,7 +9,7 @@ export const MyOrder = () => {
   const fetchMyOrder = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/myOrderData",
+        `${import.meta.env.VITE_SERVER_URL}/api/myOrderData`,
         {
           email: localStorage.getItem("userEmail"),
         },

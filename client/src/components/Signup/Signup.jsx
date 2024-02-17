@@ -18,7 +18,7 @@ export const Signup = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/createuser",
+        `${import.meta.env.VITE_SERVER_URL}/api/createuser`,
         {
           name: signupData.name,
           email: signupData.email,

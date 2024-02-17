@@ -20,7 +20,7 @@ export const Cart = () => {
     let userEmail = localStorage.getItem("userEmail");
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/orderData",
+        `${import.meta.env.VITE_SERVER_URL}/api/orderData`,
         {
           order_data: data,
           email: userEmail,

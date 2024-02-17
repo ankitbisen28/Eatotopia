@@ -11,7 +11,7 @@ export const ForgetPasswordEmail = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:5000/api/forgetPasswordMail",
+        `${import.meta.env.VITE_SERVER_URL}/api/forgetPasswordMail`,
         user
       );
       console.log("Forgot password - Email sent", response.data);

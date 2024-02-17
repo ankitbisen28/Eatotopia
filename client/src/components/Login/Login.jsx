@@ -16,7 +16,7 @@ export const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/loginuser",
+        `${import.meta.env.VITE_SERVER_URL}/api/loginuser`,
         {
           email: loginData.email,
           password: loginData.password,

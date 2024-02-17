@@ -13,7 +13,7 @@ export const VerifyForgetPassword = () => {
   const updateNewPassword = async () => {
     try {
       const user = await axios.post(
-        "http://localhost:5000/api/verifyForgetPassword",
+        `${import.meta.env.VITE_SERVER_URL}/api/verifyForgetPassword`,
         {
           token,
           newPassword,
@@ -33,7 +33,7 @@ export const VerifyForgetPassword = () => {
   });
 
   return (
-    <div style={{marginTop:"6rem"}} className="container">
+    <div style={{ marginTop: "6rem" }} className="container">
       <div className="d-flex flex-column align-items-center">
         <h1 className="m-3">Reset Password</h1>
 
