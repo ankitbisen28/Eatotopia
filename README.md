@@ -1,7 +1,13 @@
 
 # Food Web App 
 
-Welcome to our project! This is a Food ordering website made in React and Nodejs. This application i build for showing my skillset. In this application people can order their food. Not in reality, it's Just a feature i added, my main moto of making this project is that to Showcase my skill. In the future, i'll add new futures. So tune with me. 
+Introducing our latest web application, a seamless fusion of React and Node.js technology! 
+
+With our platform, users can effortlessly create accounts and securely log in using their credentials. And in case they ever forget their password, worry not! Our "Forget Password" feature on the login page ensures a hassle-free recovery process.
+
+But that's not all – welcome to a world of culinary delight! 🍽️ browsing and adding items to your cart to checking out and reviewing your orders in the "My Orders" section, every step is designed with simplicity and convenience in mind.
+
+Whether you're craving a savory meal or just exploring our demo project, our React and Node.js-powered web app promises an engaging and intuitive experience from start to finish. Join us on this gastronomic journey today!
 
 
 
@@ -29,12 +35,6 @@ Install Fontend dependencies
   npm install
 ```
 
-Start the Frontend Development Server
-
-```bash
-  npm start
-```
-
 ## Open another Terminal 
 Open another Terminal For Backend 
 
@@ -48,15 +48,15 @@ Install backend dependencies
 ```bash
   npm install
 ```
-
-Start the Frontend Development Server
+## Open Root Terminal
+Start your server on root
 
 ```bash
   npm start
 ```
 ## 🚀 About Me
 Hello Everyone, 
- Hi, I'm Ankit Bisen, a 20-year-old Software Development Student with a bachelor of Vocational in Software development and experience with MERN Stack Development. 
+ Hi, I'm Ankit Bisen, a 21-year-old Software Development Student with a bachelor of Vocational in Software development and experience with MERN Stack Development. 
 
 
 ## 🔗 Links
