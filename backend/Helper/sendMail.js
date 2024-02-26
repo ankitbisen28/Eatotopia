@@ -16,12 +16,20 @@ const sendEmail = async (email, emailType, userId) => {
       .split("")
       .filter((char) => characters.includes(char))
       .join("");
-    if ((emailType = "RESET")) {
+
+    // console.log(hashedToken);
+    if ((emailType === "RESET")) {
       await User.findByIdAndUpdate(userId, {
         forgotPasswordToken: hashedToken,
         forgotPasswordTokenExpiry: Date.now() + 3600000,
       });
+    } else if (emailType === "VERIFY") {
+      await User.findByIdAndUpdate(userId, {
+        verifyToken: hashedToken,
+        verifyTokenExpiry: Date.now() + 3600000,
+      });
     }
+    // console.log(emailType);
 
     var transport = nodemailer.createTransport({
       service: "gmail",
@@ -33,15 +41,15 @@ const sendEmail = async (email, emailType, userId) => {
         pass: process.env.NODE_MAILER_PASSWORD,
       },
     });
-
     const mailOptions = {
       from: process.env.NODE_MAILER_USER,
       to: email,
-      subject: emailType === "RESET" ? "Reset your password" : " ",
+      subject:
+        emailType === "VERIFY" ? "Verify your email" : "Reset your password",
       html: `<p>Click <a href="${
         process.env.DOMAIN
-      }/?token=${hashedToken}">here</a> to ${
-        emailType === "RESET" ? "reset your password" : " "
+      }/${emailType.toLowerCase()}?token=${hashedToken}">here</a> to ${
+        emailType === "VERIFY" ? "Verify your email" : "reset your password"
       }</p>`,
     };
 

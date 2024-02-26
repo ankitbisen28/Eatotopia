@@ -33,9 +33,9 @@ export const Signup = () => {
       );
 
       if (!response.data.success) {
-        alert("Enter Valid Credentials");
+        toast.error("Enter Valid Credentials");
       } else {
-        navigate("/");
+        navigate("/VerifyEmail");
       }
       console.log(response.data);
     } catch (error) {

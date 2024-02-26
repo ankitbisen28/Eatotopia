@@ -4,6 +4,7 @@ const User = require("../Models/User.js");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
+const sendEmail = require("../Helper/sendMail.js");
 
 const JWT_SECRET = "helloworld";
 
@@ -21,12 +22,16 @@ router.post(
     const salt = await bcrypt.genSalt(10);
     const secPass = await bcrypt.hash(req.body.password, salt);
 
+    const name = req.body.name;
+    const email = req.body.email;
+    const location = req.body.location;
+
     try {
-      const user = User.create({
-        name: req.body.name,
-        email: req.body.email,
+      const user = await User.create({
+        name: name,
+        email: email,
         password: secPass,
-        location: req.body.location,
+        location: location,
       });
 
       const data = {
@@ -34,7 +39,12 @@ router.post(
           id: user.id,
         },
       };
+
+      const userId = data.user.id.toString();
+      // console.log(userId);
       const authtoken = jwt.sign(data, JWT_SECRET);
+
+      await sendEmail(email, "VERIFY", userId);
 
       res.json({ success: true, authtoken });
     } catch (error) {
@@ -115,6 +125,37 @@ router.post("/verifyForgetPassword", async (req, res) => {
     await user.save();
 
     return res.json({ message: "Email verified successfully" });
+  } catch (error) {
+    return res.json({ error: error.message });
+  }
+});
+
+router.post("/verifyEmail", async (req, res) => {
+  try {
+    const reqBody = await req.body;
+    const { token } = reqBody;
+    // console.log(token);
+
+    const user = await User.findOne({
+      verifyToken: token,
+      verifyTokenExpiry: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.json({ error: "Invalid token" });
+    }
+
+    // console.log(user);
+
+    user.isVerfied = true;
+    user.verifyToken = undefined;
+    user.verifyTokenExpiry = undefined;
+    await user.save();
+
+    return res.json({
+      message: "Email verified successfully",
+      success: true,
+    });
   } catch (error) {
     return res.json({ error: error.message });
   }

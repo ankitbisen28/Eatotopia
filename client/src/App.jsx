@@ -12,6 +12,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { About } from "./components/About/About";
 import { ForgetPasswordEmail } from "./pages/ForgetPasswordEmail";
 import { VerifyForgetPassword } from "./pages/VerifyForgetPassword";
+import VerifyEmail from "./pages/VerifyEmail";
+import { VerifyEmailPage } from "./pages/VerifyEmailPage";
 
 function App() {
   const loggedIn = () => toast("You Logged in");
@@ -47,9 +49,11 @@ function App() {
               />
               <Route
                 exact
-                path="/VerifyForgetPassword"
+                path="/reset"
                 element={<VerifyForgetPassword />}
               />
+              <Route exact path="/verify" element={<VerifyEmail />} />
+              <Route exact path="/VerifyEmail" element={<VerifyEmailPage />} />
             </Routes>
           </div>
         </Router>
