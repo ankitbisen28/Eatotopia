@@ -27,11 +27,10 @@ export const ForgetPasswordEmail = () => {
   };
 
   return (
-    <div className="container">
-      <h3 className="p-3"> Enter Email for Forget Password</h3>
+    <div style={{marginTop:"4rem"}} className="container">
       <div className="d-flex flex-column mb-3 justify-content-center align-items-center">
-        <label htmlFor="email" className="text-dark h3">
-          {loading ? "Processing" : "Forgot Password"}
+        <label htmlFor="email" className="text-dark h3 mt-5">
+          {loading ? "Processing" : "Forget Password"}
         </label>
         <input
           className="p-2 w-50 "
@@ -41,7 +40,7 @@ export const ForgetPasswordEmail = () => {
           onChange={(e) => setUser({ ...user, email: e.target.value })}
           placeholder="Email"
         />
-        <button onClick={forgotPassword} className=" m-3 w-25 btn btn-primary">
+        <button onClick={forgotPassword} className=" m-3 w-50 btn btn-primary">
           Send Mail
         </button>
       </div>

@@ -29,7 +29,7 @@ export const Nevbar = ({ loggedOut }) => {
             className="navbar-brand navbar-brand-center d-flex align-items-center p-0 only-mobile"
             to="/"
           >
-            <img src={logo} alt="" />
+            <img src={logo} alt="logo" />
           </Link>
           <button
             className="navbar-toggler"

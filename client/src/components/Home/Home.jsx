@@ -36,8 +36,8 @@ export const Home = ({ search, setSearch }) => {
     <div>
       <div className="container">
         <div className="row d-flex align-items-center">
-          <div className="col-lg-6 hero-left">
-            <h1 className="display-4 mb-5">
+          <div style={{marginTop:"5rem"}} className="col-lg-6 hero-left">
+            <h1 className="display-4 mb-5 mt-3">
               We Love <br />
               Delicious Foods!
             </h1>

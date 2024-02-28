@@ -49,7 +49,8 @@ export const Signup = () => {
 
   return (
     <>
-      <div className="container my-5" id="SignupComponent">
+      <div className="container my-3" id="SignupComponent">
+        <h2 className="text-center">Signup</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">

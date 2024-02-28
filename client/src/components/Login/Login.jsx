@@ -56,6 +56,7 @@ export const Login = () => {
     <>
       <ToastContainer />
       <div className="container" id="loginComponent">
+        <h2 className="mt-3 text-center">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label my-3">
